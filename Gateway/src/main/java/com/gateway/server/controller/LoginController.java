@@ -22,7 +22,8 @@ public class LoginController {
 	private LoginService loginService;
 	
 	@RequestMapping(value=Constants.URI.LOGIN, method = RequestMethod.POST)
-	public ResponseEntity<RestResponse<LoginResponseData>> login(@RequestBody LoginRequestData loginRequestData) throws UtilityException {
+	public ResponseEntity<RestResponse<LoginResponseData>> login(@RequestBody 
+			LoginRequestData loginRequestData) throws UtilityException {
 		return RestUtils.successResponse(loginService.login(loginRequestData));
 	}
 }

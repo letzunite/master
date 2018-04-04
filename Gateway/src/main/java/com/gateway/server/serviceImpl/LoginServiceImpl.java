@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gateway.server.dto.TokenDTO;
 import com.gateway.server.dto.UserProfileDTO;
@@ -18,6 +19,7 @@ import com.gateway.server.repository.UserProfileRepository;
 import com.gateway.server.service.LoginService;
 import com.gateway.server.utils.CommonUtility;
 
+@Service
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired
@@ -32,9 +34,13 @@ public class LoginServiceImpl implements LoginService {
 		UserProfileDTO profileDTO = getUserProfileData(loginRequestdata);
 		if (! profileDTO.getPassword().equals(loginRequestdata.getPassword()))
 				throw new UtilityException(ResponseCode.INVALID_PASSWORD);
-		//deleteToken();
+		tokenRepository.deleteByUserId(profileDTO.get_id());
 		String tokenId = UUID.randomUUID().toString();
 		saveToken(loginRequestdata.getDeviceId(), profileDTO.get_id(), tokenId);
+		return getLoginResponse(profileDTO, tokenId);
+	}
+
+	private LoginResponseData getLoginResponse(UserProfileDTO profileDTO, String tokenId) {
 		LoginResponseData responseData = new LoginResponseData();
 		responseData.setTokenId(tokenId);
 		responseData.setUserProfile(profileDTO);

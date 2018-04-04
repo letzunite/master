@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.gateway.server.dto.TokenDTO;
 
 @Repository
-public interface TokenRepository extends MongoRepository<TokenDTO, Long>{
+public interface TokenRepository extends MongoRepository<TokenDTO, Long> {
+	
+	public void deleteByUserId(String userId);
 
 }
