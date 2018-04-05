@@ -14,6 +14,7 @@ public interface Constants {
 		String GET_ALL = "/properties";
 		String CHECK_STATUS = "/status";
 		String LOGIN = "/login";
+		String REWARD = "/reward";
 	}
 	
 	interface HEADERS {
